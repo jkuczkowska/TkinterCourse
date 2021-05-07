@@ -2,7 +2,6 @@ from tkinter import *
 
 root = Tk()
 root.title('Simple Calculator')
-root.iconbitmap('calc.bmp')
 
 e = Entry(root, width=35, borderwidth=5)
 e.grid(row=0, column=0, columnspan=3, padx=10, pady=10)
@@ -60,16 +59,13 @@ def button_div():
     f_num = int(number)
     e.delete(0,END)
 
-b1 = Button(root,text='1',padx=40, pady=20, command=lambda: button_click(1))
-b2 = Button(root,text='2',padx=40, pady=20, command=lambda: button_click(2))
-b3 = Button(root,text='3',padx=40, pady=20, command=lambda: button_click(3))
-b4 = Button(root,text='4',padx=40, pady=20, command=lambda: button_click(4))
-b5 = Button(root,text='5',padx=40, pady=20, command=lambda: button_click(5))
-b6 = Button(root,text='6',padx=40, pady=20, command=lambda: button_click(6))
-b7 = Button(root,text='7',padx=40, pady=20, command=lambda: button_click(7))
-b8 = Button(root,text='8',padx=40, pady=20, command=lambda: button_click(8))
-b9 = Button(root,text='9',padx=40, pady=20, command=lambda: button_click(9))
-b0 = Button(root,text='0',padx=40, pady=20, command=lambda: button_click(0))
+def func(x):
+    return lambda: button_click(x)
+
+b=[]
+for x in range(10):
+    f = func(x)
+    b.append(Button(root,text=str(x),padx=40, pady=20, command=f))
 
 b_add = Button(root,text='+',padx=39, pady=20, command=button_add)
 b_eq = Button(root,text='=',padx=89, pady=20, command=button_eq)
@@ -81,19 +77,11 @@ b_div = Button(root,text='/',padx=41, pady=20, command=button_div)
 
 b_quit = Button(root,text='Exit',padx=20, pady=20, command=root.quit)
 
-b1.grid(row=3 ,column=0)
-b2.grid(row=3 ,column=1)
-b3.grid(row=3 ,column=2)
-
-b4.grid(row=2 ,column=0)
-b5.grid(row=2 ,column=1)
-b6.grid(row=2 ,column=2)
-
-b7.grid(row=1 ,column=0)
-b8.grid(row=1 ,column=1)
-b9.grid(row=1 ,column=2)
-
-b0.grid(row=4 ,column=0)
+for x in range(10):
+    if x==0: b[x].grid(row=4 ,column=0)
+    elif x<4: b[x].grid(row=3, column=x-1)
+    elif x<7: b[x].grid(row=2 ,column=x-4)
+    else: b[x].grid(row=1 ,column=x-7)
 
 b_add.grid(row=5 ,column=0)
 b_eq.grid(row=5 ,column=1, columnspan=2)
@@ -104,7 +92,6 @@ b_mul.grid(row=6 ,column=1)
 b_div.grid(row=6 ,column=2)
 
 b_quit.grid(row=0 ,column = 3)
-
 
 
 root.mainloop()
